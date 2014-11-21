@@ -4,7 +4,14 @@
         xmlns:views="clr-namespace:ChatMail.Views"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <views:LoginView></views:LoginView>
+    <Grid DataContext="{Binding Source={StaticResource ContentControlService}}">
+        <Controls:MetroTabControl SelectedIndex="{Binding ShowedWindow, Mode=OneWay}">
+            <TabItem>
+                <views:LoginView></views:LoginView>
+            </TabItem>
+            <TabItem>
+                <views:MailOverview></views:MailOverview>
+            </TabItem>
+        </Controls:MetroTabControl>
     </Grid>
 </Controls:MetroWindow>

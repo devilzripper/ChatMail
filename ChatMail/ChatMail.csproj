@@ -62,14 +62,12 @@
     </ApplicationDefinition>
     <Compile Include="Code\Controller\MessageController.cs" />
     <Compile Include="Code\Controller\UserController.cs" />
-    <Compile Include="Code\Models\Message.cs" />
-    <Compile Include="Code\Models\User.cs" />
     <Compile Include="Code\Models\UserToMessage.cs" />
-    <Compile Include="Code\Service\Database.cs" />
-    <Compile Include="Code\ViewModelService\BaseModelService.cs" />
-    <Compile Include="Code\ViewModelService\MainWindowViewModel.cs" />
+    <Compile Include="Code\ViewModelService\ContentControlService.cs" />
+    <Compile Include="Code\ViewModel\MailOverviewViewModel.cs" />
     <Compile Include="Code\ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Code\ViewModel\UserViewModel.cs" />
+    <Compile Include="Code\ViewModelService\BaseModelService.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +85,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Code\Models\Message.cs" />
+    <Compile Include="Code\Models\User.cs" />
+    <Compile Include="Code\Service\Database.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

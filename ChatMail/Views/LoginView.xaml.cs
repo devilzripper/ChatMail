@@ -1,4 +1,5 @@
 ﻿using ChatMail.Code.Controller;
+using ChatMail.Code.ViewModelService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,8 @@ namespace ChatMail.Views
             if (usc.Login("admin", "1234"))
             {
                 labelMessage.Text = "success";
+                var context = (ContentControlService)FindResource("ContentControlService");
+                context.ShowedWindow = 1;
             }
         }
     }

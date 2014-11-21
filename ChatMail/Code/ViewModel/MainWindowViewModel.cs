@@ -1,4 +1,5 @@
 ﻿using ChatMail.Code.Models;
+using ChatMail.Code.ViewModelService;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,22 @@ using System.Threading.Tasks;
 
 namespace ChatMail.Code.ViewModel
 {
-    class MainWindowViewModel
+    class MainWindowViewModel : BaseModelService
     {
+        private User currentUser;
+        public User CurrentUser
+        {
+            get { return currentUser; }
+            set
+            {
+                currentUser = value;
+                base.RaisePropertyChanged("CurrentUser");
+            }
+        }
+
         public MainWindowViewModel()
         {
-            
+
         }
     }
 }

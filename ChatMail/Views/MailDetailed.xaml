@@ -6,7 +6,24 @@
              xmlns:local="clr-namespace:ChatMail.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="209*"/>
+            <RowDefinition Height="92*"/>
+        </Grid.RowDefinitions>
+        <RichTextBox x:Name="richTextBox">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBox x:Name="textBox" TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Stretch" Width="200"/>
+            <Button Width="100" HorizontalAlignment="Right" Content="Send"/>
+        </StackPanel>
     </Grid>
 </UserControl>

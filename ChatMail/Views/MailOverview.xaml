@@ -5,7 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatMail.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="722.388" d:DesignWidth="950.747">
+             d:DesignHeight="722.388" d:DesignWidth="950.747"
+             >
+    <UserControl.Resources>
+        <DataTemplate DataType="ListBox">
+            <StackPanel DataContext="MailOverviewViewModel">
+            <TextBlock></TextBlock>
+            <TextBlock></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="74*"/>
