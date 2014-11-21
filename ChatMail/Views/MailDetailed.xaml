@@ -7,23 +7,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="5" d:DataContext="{d:DesignData /SampleData/MailOverviewViewModelSampleData.xaml}">
         <Grid.RowDefinitions>
             <RowDefinition Height="209*"/>
             <RowDefinition Height="92*"/>
         </Grid.RowDefinitions>
-        <RichTextBox x:Name="richTextBox">
+        <RichTextBox x:Name="richTextBox" Margin="0">
             <FlowDocument>
                 <Paragraph>
                     <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBox x:Name="textBox" TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Stretch" Width="200"/>
-            <Button Width="100" HorizontalAlignment="Right" Content="Send"/>
-        </StackPanel>
+        <Grid Grid.Row="1" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <RichTextBox x:Name="richTextBox1">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="RichTextBox"/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <Button x:Name="button" Content="Button" Grid.Column="1" Margin="5,0,0,0"/>
+        </Grid>
     </Grid>
 </UserControl>

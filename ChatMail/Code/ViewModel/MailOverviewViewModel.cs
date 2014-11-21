@@ -10,13 +10,13 @@ namespace ChatMail.Code.ViewModel
 {
     public class MailOverviewViewModel : BaseModelService
     {
-        private Message message;
+        private List<Message> messages;
 
-        public Message Message
+        public List<Message> Messages
         {
-            get { return message; }
-            set { message = value;
-                RaisePropertyChanged("Message");
+            get { return messages; }
+            set { messages = value;
+                RaisePropertyChanged("Messages");
             }
         }
 
