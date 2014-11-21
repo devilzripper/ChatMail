@@ -8,19 +8,19 @@
              d:DesignHeight="722.388" d:DesignWidth="950.747"
              >
     <UserControl.Resources>
-        <DataTemplate DataType="ListBox">
-            <StackPanel DataContext="MailOverviewViewModel">
-            <TextBlock></TextBlock>
-            <TextBlock></TextBlock>
+        <DataTemplate x:Key="MessageTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding SendTime}" FontWeight="Bold" />
+                <TextBlock Text="{Binding Text}" FontWeight="Bold" />
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
+    <Grid DataContext="{Binding Source={StaticResource MailOverviewViewModelDataSource}}" d:DataContext="{d:DesignData /SampleData/MailOverviewViewModelSampleData.xaml}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="74*"/>
             <ColumnDefinition Width="243*"/>
-        </Grid.ColumnDefinitions>   
-            <ListBox x:Name="listBox"/>
-            <local:MailDetailed Grid.Column="1"/>
-        </Grid>
+        </Grid.ColumnDefinitions>
+        <ListBox ItemTemplate="{DynamicResource MessageTemplate}" ItemsSource="{Binding Messages}" />
+        <local:MailDetailed Grid.Column="1"/>
+    </Grid>
 </UserControl>

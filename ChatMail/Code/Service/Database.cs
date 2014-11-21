@@ -5,12 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ChatMail.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlClient;
-    using System.Windows;
-    using ChatMail.Code.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows;
+using ChatMail.Code.Models;
 
     /// <summary>
     /// Die Klasse der Datenbankzugriffe

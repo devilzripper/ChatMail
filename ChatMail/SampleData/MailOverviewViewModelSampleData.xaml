@@ -1,0 +1,14 @@
+﻿<ViewModel:MailOverviewViewModel xmlns:ViewModel="clr-namespace:ChatMail.Code.ViewModel" xmlns:Models="clr-namespace:ChatMail.Code.Models">
+    <ViewModel:MailOverviewViewModel.Messages>
+        <Models:Message IsSend="True" ID="74" SendTime="11/21/2014 12:12:55" Text="Aenean aliquam nam cras"/>
+        <Models:Message IsSend="False" ID="22" SendTime="11/21/2014 12:12:55" Text="Vestibulum curabitur suspendisse"/>
+        <Models:Message IsSend="True" ID="42" SendTime="11/21/2014 12:12:55" Text="Pellentesque class"/>
+        <Models:Message IsSend="False" ID="76" SendTime="11/21/2014 12:12:55" Text="Sed maecenas"/>
+        <Models:Message IsSend="True" ID="36" SendTime="11/21/2014 12:12:55" Text="Mauris phasellus nullam"/>
+        <Models:Message IsSend="False" ID="48" SendTime="11/21/2014 12:12:55" Text="Aptent adipiscing"/>
+        <Models:Message IsSend="True" ID="32" SendTime="11/21/2014 12:12:55" Text="Curae dis parturient consequat"/>
+        <Models:Message IsSend="False" ID="81" SendTime="11/21/2014 12:12:55" Text="Consectetuer praesent convallis"/>
+        <Models:Message IsSend="True" ID="27" SendTime="11/21/2014 12:12:55" Text="Integer auctor pellentesque"/>
+        <Models:Message IsSend="False" ID="11" SendTime="11/21/2014 12:12:55" Text="Sollicitudin duis"/>
+    </ViewModel:MailOverviewViewModel.Messages>
+</ViewModel:MailOverviewViewModel>
