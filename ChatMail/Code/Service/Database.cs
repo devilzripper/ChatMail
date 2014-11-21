@@ -1,32 +1,54 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Database.cs" company="ITS-Schule Stuttgart">
+//  ITS-Schule Stuttgart
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+namespace ChatMail.Services
+{
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security;
-using System.Timers;
-using System.Web;
 using System.Windows;
 using ChatMail.Code.Models;
 
-namespace ChatMail.Services
-{
+    /// <summary>
+    /// Die Klasse der Datenbankzugriffe
+    /// </summary>
     public class Database
     {
+        #region private Variables
+        /// <summary>
+        /// Die Verbindung zum SQL Server
+        /// </summary>
         private SqlConnection sqlConnection;
 
+        /// <summary>
+        /// Der Befehl der auf die Datenbank ausgeführt werden soll
+        /// </summary>
         private SqlCommand cmd;
 
-        private DataSet actualDataSet = new DataSet();
+        /// <summary>
+        /// Der ConnectionString zum verbinden in die Datenbank
+        /// </summary>
+        private string connString = "Data Source=localhost;Initial Catalog=ChatMail;Integrated Security=True;";
+        #endregion
 
-        private string connString = @"Data Source=(localdb)\ProjectsV12;Initial Catalog=MailChat;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
-
+        #region Constructor
+        /// <summary>
+        /// Initialisert eine neue Instanz der <see cref="Database.cs"/> Klasse.
+        /// </summary>
         public Database()
         {
             sqlConnection = new SqlConnection(connString);
         }
+        #endregion
 
+        #region public Methods
+        /// <summary>
+        /// Fügt einen Nutzer in die Datenbank ein
+        /// </summary>
+        /// <param name="user">Der zu eintragende Nutzer</param>
         public void Insert(User user)
         {
             try
@@ -50,6 +72,10 @@ namespace ChatMail.Services
             }
         }
 
+        /// <summary>
+        /// Fügt eine Nachricht in die Datenbank ein 
+        /// </summary>
+        /// <param name="msg">Die Nachricht die eingetragen werden soll.</param>
         public void Insert(Message msg)
         {
             try
@@ -73,6 +99,10 @@ namespace ChatMail.Services
             }
         }
 
+        /// <summary>
+        /// Trägt einen Eintrag in die Verbindungstabelle ein
+        /// </summary>
+        /// <param name="user2msg">Das Objekt zur Verbindungstabelle</param>
         public void Insert(UserToMessage user2msg)
         {
             try
@@ -95,6 +125,10 @@ namespace ChatMail.Services
             }
         }
 
+        /// <summary>
+        /// Verändert einen Nutzer in der Datenbank
+        /// </summary>
+        /// <param name="user"></param>
         public void Alter(User user)
         {
             try
@@ -119,6 +153,10 @@ namespace ChatMail.Services
             }
         }
 
+        /// <summary>
+        /// Holt eine Liste von Benutzern aus der Datenbank
+        /// </summary>
+        /// <returns>Die Liste der Benutzer</returns>
         public List<User> getUserList()
         {
             List<User> userListe = new List<User>();
@@ -150,38 +188,11 @@ namespace ChatMail.Services
             return userListe;
         }
 
-        private State GetState(int stateNr)
-        {
-            State state = State.Offline;
-            switch (stateNr)
-            {
-                case 1:
-                    state = State.Offline;
-                    break;
-                case 2:
-                    state = State.Online;
-                    break;
-                case 3:
-                    state = State.Away;
-                    break;
-            }
-            return state;
-        }
-
-        private int GetNrFromState(State state)
-        {
-            switch (state)
-            {
-                case State.Online:
-                    return 1;
-                case State.Offline:
-                    return 2;
-                case State.Away:
-                    return 3;
-            }
-            return -1;
-        }
-
+        /// <summary>
+        /// Holt einen Nutzer anhand seiner ID aus der Datenbank
+        /// </summary>
+        /// <param name="id">Die ID des Users</param>
+        /// <returns>Den User</returns>
         public User getUserbyID(int id)
         {
             try
@@ -208,6 +219,11 @@ namespace ChatMail.Services
             return null;
         }
 
+        /// <summary>
+        /// Holt einen Namen eines User einer Messages aus der Datenbank
+        /// </summary>
+        /// <param name="messageid">Die ID Der Nachricht</param>
+        /// <returns>Den Usernamen</returns>
         public string getUserNameByMessage(int messageid)
         {
             try
@@ -237,6 +253,10 @@ namespace ChatMail.Services
             return string.Empty;
         }
 
+        /// <summary>
+        /// Holt die Liste der UserToMessages Einträge aus der Datenbank
+        /// </summary>
+        /// <returns></returns>
         public List<UserToMessage> getUserToMessageList()
         {
             List<UserToMessage> userToMessageListe = new List<UserToMessage>();
@@ -267,6 +287,10 @@ namespace ChatMail.Services
             return userToMessageListe;
         }
 
+        /// <summary>
+        /// Holt die Nachrichtenliste aus der Datenbank
+        /// </summary>
+        /// <returns>Eine Messageliste</returns>
         public List<Message> getMessageList()
         {
             List<Message> messageListe = new List<Message>();
@@ -295,7 +319,9 @@ namespace ChatMail.Services
             }
             return messageListe;
         }
+        #endregion 
 
+        #region private Methods
         /// <summary>
         /// Schließt die Verbindung
         /// </summary>
@@ -305,5 +331,48 @@ namespace ChatMail.Services
             sqlConnection.Dispose();
         }
 
+        /// <summary>
+        /// Holt den Status aus der Nummer die in der Datenbank steht (Enumeration)
+        /// </summary>
+        /// <param name="stateNr">Der Status des Nutzers als Zahl</param>
+        /// <returns>Den Status</returns>
+        private State GetState(int stateNr)
+        {
+            State state = State.Offline;
+            switch (stateNr)
+            {
+                case 1:
+                    state = State.Offline;
+                    break;
+                case 2:
+                    state = State.Online;
+                    break;
+                case 3:
+                    state = State.Away;
+                    break;
+            }
+            return state;
+        }
+
+        /// <summary>
+        /// Geht die Enumeration durch und liefert eine Zahl zurück
+        /// </summary>
+        /// <param name="state">Der Status in dem der User sich gerade befindet</param>
+        /// <returns>Die Nummer des Statuses wie sie in der Datenbank steht</returns>
+        private int GetNrFromState(State state)
+        {
+            switch (state)
+            {
+                case State.Offline:
+                    return 1;
+                case State.Online:
+                    return 2;
+                case State.Away:
+                    return 3;
+            }
+            return -1;
+        }
+
+        #endregion
     }
 }
