@@ -123,6 +123,16 @@ namespace ChatMail.Code.Controller
         {
             return db.getUserNameByMessage(id);
         }
+
+        /// <summary>
+        /// Holt eine UserID von der Message
+        /// </summary>
+        /// <param name="id">Die Message ID</param>
+        /// <returns>Die User ID</returns>
+        public int getUserIDByMessage(int id)
+        {
+            return this.db.getUserIDByMessage(id);
+        }
         #endregion
 
         #region private Methods

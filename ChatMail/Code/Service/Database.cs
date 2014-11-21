@@ -253,6 +253,36 @@ using ChatMail.Code.Models;
             return string.Empty;
         }
 
+        public int getUserIDByMessage(int messageid)
+        {
+            try
+            {
+                sqlConnection.ConnectionString = connString;
+                string sqlstring = "SELECT ID FROM User WHERE ID=(SELECT UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
+                cmd = new SqlCommand(sqlstring, sqlConnection);
+                cmd.Parameters.Add(new SqlParameter("@ID", messageid));
+                sqlConnection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return Convert.ToInt32(reader[0]);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Fehler beim laden der Userdaten", "Fehlermeldung");
+            }
+            finally
+            {
+                Close();
+            }
+
+            return -1;
+        }
+
+
         /// <summary>
         /// Holt die Liste der UserToMessages Einträge aus der Datenbank
         /// </summary>
