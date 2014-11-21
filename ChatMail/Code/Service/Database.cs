@@ -73,6 +73,28 @@ namespace ChatMail.Services
             }
         }
 
+        public void Insert(UserToMessage user2msg)
+        {
+            try
+            {
+                sqlConnection.ConnectionString = connString;
+                string sqlstring = "INSERT INTO Message(UserID_FK, MessageID_FK) VALUES(@UserID_FK, @MessageID_FK)";
+                cmd = new SqlCommand(sqlstring, sqlConnection);
+                sqlConnection.Open();
+                cmd.Parameters.AddWithValue("@UserID_FK", user2msg.UserID);
+                cmd.Parameters.AddWithValue("@MessageID_FK", user2msg.MessageID);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Fehler beim versenden der Nachricht");
+            }
+            finally
+            {
+                Close();
+            }
+        }
+
         public void Alter(User user)
         {
             try
@@ -184,6 +206,35 @@ namespace ChatMail.Services
             }
 
             return null;
+        }
+
+        public string getUserNameByMessage(int messageid)
+        {
+            try
+            {
+                sqlConnection.ConnectionString = connString;
+                string sqlstring = "SELECT Name FROM User WHERE ID=(SELECT UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
+                cmd = new SqlCommand(sqlstring, sqlConnection);
+                cmd.Parameters.Add(new SqlParameter("@ID", messageid));
+                sqlConnection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return Convert.ToString(reader[0]);
+                    }
+                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Fehler beim laden der Userdaten", "Fehlermeldung");
+            }
+            finally
+            {
+                Close();
+            }
+
+            return string.Empty;
         }
 
         public List<UserToMessage> getUserToMessageList()

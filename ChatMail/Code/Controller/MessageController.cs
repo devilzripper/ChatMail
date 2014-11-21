@@ -1,4 +1,8 @@
-﻿
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="MessageController.cs" company="ITS-Schule Stuttgart">
+//  ITS-Schule Stuttgart
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 namespace ChatMail.Code.Controller
 {
     using System;
@@ -27,50 +31,98 @@ namespace ChatMail.Code.Controller
         /// </summary>
         public List<Message> messageFromUserList;
 
+        /// <summary>
+        /// Die id  List der Messages
+        /// </summary>
         private List<int> messageIDList;
 
+        /// <summary>
+        /// Der aktuelle User des Programms
+        /// </summary>
         private User currentUser;
 
+        /// <summary>
+        /// Die Instanz der Datenbank
+        /// </summary>
+        private Database db = new Database();
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="MessageController.cs"/> Klasse.
+        /// </summary>
+        /// <param name="user">Der aktuell eingeloggte Nutzer</param>
         public MessageController(User user)
         {
             currentUser = user;
         }
 
-        private Database db = new Database();
-
+        /// <summary>
+        /// Das Event des Timers dasd alle 5000ms ausgelöst wird und die Daten aktualisiert
+        /// </summary>
+        /// <param name="sender">Der Event Sender</param>
+        /// <param name="e">Wird nicht benutzt.</param>
         public void time_Tick(object sender, EventArgs e)
         {
-            if (currentUser != null)
+            if (this.currentUser != null)
             {
-                messageFromUserList = this.getMessageByUser();
+                this.messageFromUserList = this.getMessageByUser();
             }
         }
 
+        /// <summary>
+        /// Startet den Timer mit 5000ms Zeitspanne
+        /// </summary>
         public void StartTimer()
         {
-            if (time == null)
+            if (this.time == null)
             {
-                time = new Timer(5000);
+                this.time = new Timer(5000);
             }
-            time.Elapsed += time_Tick;
-            time.Start();
+            this.time.Elapsed += time_Tick;
+            this.time.Start();
         }
 
+        /// <summary>
+        /// Beendet den Timer
+        /// </summary>
         public void EndTimer()
         {
             time.EndInit();
             time.Dispose();
         }
+
+        /// <summary>
+        /// Versendet eine Nachricht und trägt sie somit in die Datenbank ein
+        /// </summary>
+        /// <param name="msg">Die Nachricht die übertragen werden sollen</param>
         public void Send(Message msg)
         {
+            this.db.Insert(new UserToMessage(this.currentUser.ID, msg.ID));
             this.db.Insert(msg);
         }
 
+        /// <summary>
+        /// Holt eine Liste von Nachrichten.
+        /// </summary>
+        /// <returns>Die gefüllte Liste an Nachrichten</returns>
         public List<Message> getMessageListe()
         {
             return messageFromUserList;
         }
 
+        /// <summary>
+        /// Holt einen Usernamen von einer gesendeten Nachricht
+        /// </summary>
+        /// <param name="id">Die ID der Message</param>
+        /// <returns>Den Username der versendeten Nachricht</returns>
+        public string getUserNameByMessage(int id)
+        {
+            return db.getUserNameByMessage(id);
+        }
+
+        /// <summary>
+        /// Holt eine Liste von Nachrichten die nur von dem Nutzer sind
+        /// </summary>
+        /// <returns>Die gefüllte Liste an Nachrichten</returns>
         private List<Message> getMessageByUser()
         {
             messageIDList = new List<int>();
