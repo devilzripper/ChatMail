@@ -99,9 +99,9 @@ namespace ChatMail.Code.Controller
         /// Versendet eine Nachricht und trägt sie somit in die Datenbank ein
         /// </summary>
         /// <param name="msg">Die Nachricht die übertragen werden sollen</param>
-        public void Send(Message msg)
+        public void Send(Message msg, int recipent_id)
         {
-            this.db.Insert(new UserToMessage(this.currentUser.ID, msg.ID));
+            this.db.Insert(new UserToMessage(this.currentUser.ID, recipent_id));
             this.db.Insert(msg);
         }
 
@@ -109,7 +109,7 @@ namespace ChatMail.Code.Controller
         /// Holt eine Liste von Nachrichten.
         /// </summary>
         /// <returns>Die gefüllte Liste an Nachrichten</returns>
-        public List<Message> getMessageListe()
+        public List<Message> getMessageFromUserList()
         {
             return messageFromUserList;
         }
