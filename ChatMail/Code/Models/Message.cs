@@ -8,6 +8,14 @@ namespace ChatMail.Code.Models
 {
     public class Message
     {
+        private int id;
+
+        private string text;
+
+        private DateTime sendTime;
+
+        private bool isSend;
+
         public Message(int id, string text, DateTime sendTime, bool isSend)
         {
             this.id = id;
@@ -15,7 +23,6 @@ namespace ChatMail.Code.Models
             this.sendTime = sendTime;
             this.isSend = isSend;
         }
-        private int id;
 
         public int ID
         {
@@ -23,24 +30,17 @@ namespace ChatMail.Code.Models
             set { id = value; }
         }
 
-        private string text;
-
         public string Text
         {
             get { return text; }
             set { text = value; }
         }
 
-        private DateTime sendTime;
-
         public DateTime SendTime
         {
             get { return sendTime; }
             set { sendTime = value; }
         }
-
-        private bool isSend;
-
         public bool IsSend
         {
             get { return isSend; }
