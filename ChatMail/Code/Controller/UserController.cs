@@ -19,6 +19,8 @@ namespace ChatMail.Code.Controller
     /// </summary>
     public class UserController
     {
+        public static User CurrentUser { get; set; }
+
         /// <summary>
         /// Ein Instanz der Datenbank
         /// </summary>
@@ -44,6 +46,7 @@ namespace ChatMail.Code.Controller
                 {
                     if(user.Password == password)
                     {
+                        CurrentUser = user;
                         return true;
                     }
                     else

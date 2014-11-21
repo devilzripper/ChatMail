@@ -31,7 +31,7 @@ using ChatMail.Code.Models;
         /// <summary>
         /// Der ConnectionString zum verbinden in die Datenbank
         /// </summary>
-        private string connString = "Data Source=localhost;Initial Catalog=ChatMail;Integrated Security=True;";
+        private string connString = @"Data Source=(localdb)\ProjectsV12;Initial Catalog=MailChat;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         #endregion
 
         #region Constructor
