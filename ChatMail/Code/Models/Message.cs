@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Message.cs" company="ITS-Schule Stuttgart">
+//  ITS-Schule Stuttgart
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 namespace ChatMail.Code.Models
 {
+    using System;
+
+    /// <summary>
+    /// Die Klasse der Nachrichten
+    /// </summary>
     public class Message
     {
+        #region private Variables
         private int id;
 
         private string text;
@@ -15,7 +20,7 @@ namespace ChatMail.Code.Models
         private DateTime sendTime;
 
         private bool isSend;
-
+        #endregion
         public Message(int id, string text, DateTime sendTime, bool isSend)
         {
             this.id = id;

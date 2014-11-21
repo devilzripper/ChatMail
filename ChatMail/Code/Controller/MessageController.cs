@@ -16,6 +16,7 @@ namespace ChatMail.Code.Controller
     /// </summary>
     public class MessageController
     {
+        #region Private Variables
         /// <summary>
         /// Der Timer der die Daten neu Holt
         /// </summary>
@@ -45,7 +46,9 @@ namespace ChatMail.Code.Controller
         /// Die Instanz der Datenbank
         /// </summary>
         private Database db = new Database();
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Initialisiert eine neue Instanz der <see cref="MessageController.cs"/> Klasse.
         /// </summary>
@@ -54,7 +57,9 @@ namespace ChatMail.Code.Controller
         {
             currentUser = user;
         }
+        #endregion
 
+        #region public Methods
         /// <summary>
         /// Das Event des Timers dasd alle 5000ms ausgelöst wird und die Daten aktualisiert
         /// </summary>
@@ -118,6 +123,9 @@ namespace ChatMail.Code.Controller
         {
             return db.getUserNameByMessage(id);
         }
+        #endregion
+
+        #region private Methods
 
         /// <summary>
         /// Holt eine Liste von Nachrichten die nur von dem Nutzer sind
@@ -146,5 +154,6 @@ namespace ChatMail.Code.Controller
             }
             return messageliste;
         }
+        #endregion
     }
 }
