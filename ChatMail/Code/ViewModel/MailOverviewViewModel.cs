@@ -1,4 +1,5 @@
-﻿using ChatMail.Code.Models;
+﻿using ChatMail.Code.Controller;
+using ChatMail.Code.Models;
 using ChatMail.Code.ViewModelService;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ChatMail.Code.ViewModel
@@ -54,16 +56,22 @@ namespace ChatMail.Code.ViewModel
         private ObservableCollection<Message> messages;
         public ObservableCollection<Message> Messages
         {
-            get { return messages; }
-            set { messages = value;
+            get {
+                return messages;
             }
+            set { messages = value;}
         }
 
+        MessageController msc;
 
+        public MailOverviewViewModel()
+        {
+        }
 
         public void SendResponse()
         {
-            
+            msc = new MessageController(UserController.CurrentUser);
+            msc.Send(new Message();
         }
     }
 }

@@ -49,7 +49,12 @@ namespace ChatMail.Code.Models
             this.sendTime = sendTime;
             this.isSend = isSend;
         }
-        #endregion
+        public Message(string text, DateTime sendTime, bool isSend)
+        {
+            this.text = text;
+            this.sendTime = sendTime;
+            this.isSend = isSend;
+        }
 
         #region Properties
         /// <summary>
