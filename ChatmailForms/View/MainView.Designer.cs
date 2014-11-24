@@ -39,14 +39,18 @@
             this.listBox1_Users = new System.Windows.Forms.ListBox();
             this.listBox_Messages = new System.Windows.Forms.ListBox();
             this.textBox_ChatText = new System.Windows.Forms.TextBox();
-            this.btn_Senden = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_Send = new System.Windows.Forms.Button();
             this.timer_GetMessagesAndUser = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.messageSchreibenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.comboBox_Users = new System.Windows.Forms.ComboBox();
+            this.bindingSource_Message = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -80,7 +84,7 @@
             // registerToolStripMenuItem
             // 
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
-            this.registerToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.registerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.registerToolStripMenuItem.Text = "Register";
             // 
             // statusStrip1
@@ -126,30 +130,21 @@
             // 
             // textBox_ChatText
             // 
-            this.textBox_ChatText.Location = new System.Drawing.Point(203, 325);
+            this.textBox_ChatText.Location = new System.Drawing.Point(202, 324);
             this.textBox_ChatText.Multiline = true;
             this.textBox_ChatText.Name = "textBox_ChatText";
-            this.textBox_ChatText.Size = new System.Drawing.Size(461, 58);
+            this.textBox_ChatText.Size = new System.Drawing.Size(416, 58);
             this.textBox_ChatText.TabIndex = 4;
             // 
-            // btn_Senden
+            // button_Send
             // 
-            this.btn_Senden.Location = new System.Drawing.Point(670, 323);
-            this.btn_Senden.Name = "btn_Senden";
-            this.btn_Senden.Size = new System.Drawing.Size(75, 23);
-            this.btn_Senden.TabIndex = 5;
-            this.btn_Senden.Text = "Löschen";
-            this.btn_Senden.UseVisualStyleBackColor = true;
-            this.btn_Senden.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(670, 352);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 31);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Senden";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_Send.Location = new System.Drawing.Point(624, 352);
+            this.button_Send.Name = "button_Send";
+            this.button_Send.Size = new System.Drawing.Size(121, 31);
+            this.button_Send.TabIndex = 6;
+            this.button_Send.Text = "Senden";
+            this.button_Send.UseVisualStyleBackColor = true;
+            this.button_Send.Click += new System.EventHandler(this.button_Send_Click);
             // 
             // timer_GetMessagesAndUser
             // 
@@ -169,13 +164,22 @@
             this.messageSchreibenToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.messageSchreibenToolStripMenuItem.Text = "Message Schreiben";
             // 
+            // comboBox_Users
+            // 
+            this.comboBox_Users.DisplayMember = "Name";
+            this.comboBox_Users.FormattingEnabled = true;
+            this.comboBox_Users.Location = new System.Drawing.Point(624, 325);
+            this.comboBox_Users.Name = "comboBox_Users";
+            this.comboBox_Users.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Users.TabIndex = 8;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 428);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btn_Senden);
+            this.Controls.Add(this.comboBox_Users);
+            this.Controls.Add(this.button_Send);
             this.Controls.Add(this.textBox_ChatText);
             this.Controls.Add(this.listBox_Messages);
             this.Controls.Add(this.listBox1_Users);
@@ -184,11 +188,14 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainView";
             this.Text = "Chatmail";
+            this.Load += new System.EventHandler(this.MainView_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,16 +208,18 @@
         private System.Windows.Forms.ListBox listBox1_Users;
         private System.Windows.Forms.ListBox listBox_Messages;
         private System.Windows.Forms.TextBox textBox_ChatText;
-        private System.Windows.Forms.Button btn_Senden;
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registerToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Status;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Logged;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_Send;
         private System.Windows.Forms.Timer timer_GetMessagesAndUser;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem messageSchreibenToolStripMenuItem;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.ComboBox comboBox_Users;
+        private System.Windows.Forms.BindingSource bindingSource_Message;
     }
 }
 

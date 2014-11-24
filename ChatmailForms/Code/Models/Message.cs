@@ -31,7 +31,7 @@ namespace ChatMail.Code.Models
         /// <summary>
         /// Ist die Nachricht versandt?
         /// </summary>
-        private bool isSend;
+        private bool isShown;
         #endregion
 
         #region Constructor
@@ -42,12 +42,40 @@ namespace ChatMail.Code.Models
         /// <param name="text">Der Text der Message</param>
         /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
         /// <param name="isSend">Ist die Nachricht versendet?</param>
-        public Messages(int id, string text, DateTime sendTime, bool isSend)
+        public Messages(int id, string text, DateTime sendTime, bool isShown)
         {
             this.id = id;
             this.text = text;
             this.sendTime = sendTime;
-            this.isSend = isSend;
+            this.isShown = isShown;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="Messages.cs"/> Klasse.
+        /// </summary>
+        /// <param name="id">Die ID der Message</param>
+        /// <param name="text">Der Text der Message</param>
+        /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
+        /// <param name="isSend">Ist die Nachricht versendet?</param>
+        public Messages(int id, string text, DateTime sendTime)
+        {
+            this.id = id;
+            this.text = text;
+            this.sendTime = sendTime;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="Messages.cs"/> Klasse.
+        /// </summary>
+        /// <param name="id">Die ID der Message</param>
+        /// <param name="text">Der Text der Message</param>
+        /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
+        /// <param name="isSend">Ist die Nachricht versendet?</param>
+        public Messages(string text, DateTime sendTime, bool isShown)
+        {
+            this.text = text;
+            this.sendTime = sendTime;
+            this.isShown = isShown;
         }
         #endregion
 
@@ -82,10 +110,10 @@ namespace ChatMail.Code.Models
         /// <summary>
         /// Holt oder setzt den Wert ob es gesendet wurden ist.
         /// </summary>
-        public bool IsSend
+        public bool IsShown
         {
-            get { return isSend; }
-            set { isSend = value; }
+            get { return isShown; }
+            set { isShown = value; }
         }
         #endregion
     }

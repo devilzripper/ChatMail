@@ -82,12 +82,12 @@ namespace ChatMail.Services
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO Message(Name, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend)";
+                string sqlstring = "INSERT INTO Message(MessageText, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@Text", msg.Text);
                 cmd.Parameters.AddWithValue("@SendTIme", msg.SendTime);
-                cmd.Parameters.AddWithValue("@isSend", msg.IsSend);
+                cmd.Parameters.AddWithValue("@isSend", msg.IsShown);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -109,7 +109,7 @@ namespace ChatMail.Services
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO Message(UserID_FK, MessageID_FK) VALUES(@UserID_FK, @MessageID_FK)";
+                string sqlstring = "INSERT INTO UserToMessage(UserID_FK, MessageID_FK) VALUES(@UserID_FK, @MessageID_FK)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@UserID_FK", user2msg.UserID);
@@ -118,7 +118,7 @@ namespace ChatMail.Services
             }
             catch (Exception)
             {
-                //MessageBox.Show("Fehler beim versenden der Nachricht");
+                MessageBox.Show("Fehler beim versenden der Nachricht");
             }
             finally
             {
@@ -163,9 +163,10 @@ namespace ChatMail.Services
             List<User> userListe = new List<User>();
             try
             {
-                sqlConnection.ConnectionString = connString;
                 string sqlstring = "SELECT * FROM [User]";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
+                sqlConnection.Close();
+                sqlConnection.ConnectionString = connString;
                 sqlConnection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -293,9 +294,10 @@ namespace ChatMail.Services
             List<UserToMessage> userToMessageListe = new List<UserToMessage>();
             try
             {
-                sqlConnection.ConnectionString = connString;
-                string sqlstring = "SELECT * FROM UserToMessage";
-                cmd = new SqlCommand(sqlstring, sqlConnection);
+               string sqlstring = "SELECT * FROM UserToMessage";
+               cmd = new SqlCommand(sqlstring, sqlConnection);
+               sqlConnection.Close();
+               sqlConnection.ConnectionString = connString;
                 sqlConnection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -308,6 +310,7 @@ namespace ChatMail.Services
             }
             catch (Exception)
             {
+                throw;
                 MessageBox.Show("Fehler beim laden der UserToMessage Daten", "Fehlermeldung");
             }
             finally
@@ -335,7 +338,7 @@ namespace ChatMail.Services
                 {
                     while (reader.Read())
                     {
-                        messageListe.Add(new Messages(Convert.ToInt32(reader[0]), reader[1].ToString(), Convert.ToDateTime(reader[2]), Convert.ToBoolean(reader[0])));
+                        messageListe.Add(new Messages(Convert.ToInt32(reader[0]), reader[1].ToString(), Convert.ToDateTime(reader[2])));
                     }
 
                 }

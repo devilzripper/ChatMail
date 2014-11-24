@@ -71,7 +71,7 @@ namespace ChatMail.Code.ViewModel
         public void SendResponse()
         {
             msc = new MessageController(UserController.CurrentUser);
-            msc.Send(new Message();
+            //msc.Send(new Message();
         }
     }
 }

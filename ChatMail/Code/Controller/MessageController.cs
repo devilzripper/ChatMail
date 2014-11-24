@@ -111,7 +111,7 @@ namespace ChatMail.Code.Controller
         /// <returns>Die gefüllte Liste an Nachrichten</returns>
         public List<Message> getMessageFromUserList()
         {
-            return messageFromUserList;
+            return getMessageByUser();
         }
 
         /// <summary>

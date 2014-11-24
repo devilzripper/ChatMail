@@ -22,6 +22,12 @@ namespace ChatMail.Code.Models
         /// Die ID der Messages die von dem User stammt
         /// </summary>
         private int messageID;
+
+        /// <summary>
+        /// Die ID des Empfängers der Nachricht
+        /// </summary>
+        private int recipent_ID;
+
         #endregion
 
         #region Constructor
@@ -31,11 +37,12 @@ namespace ChatMail.Code.Models
         /// <param name="id">Die ID des UserToMessage Eintrages</param>
         /// <param name="userid">Die ID des Users der die Message versendet hat</param>
         /// <param name="messageid">Die Nachrichten ID</param>
-        public UserToMessage(int id, int userid, int messageid)
+        public UserToMessage(int id, int userid, int messageid, int recipentid)
         {
             this.id = id;
             this.userID = userid;
             this.messageID = messageid;
+            this.recipent_ID = recipentid;
         }
 
         /// <summary>
@@ -44,10 +51,11 @@ namespace ChatMail.Code.Models
         /// <param name="id">Die ID des UserToMessage Eintrages</param>
         /// <param name="userid">Die ID des Users der die Message versendet hat</param>
         /// <param name="messageid">Die Nachrichten ID</param>
-        public UserToMessage(int userid, int messageid)
+        public UserToMessage(int userid, int recipentid, int messageid)
         {
             this.userID = userid;
             this.messageID = messageid;
+            this.recipent_ID = recipentid;
         }
         #endregion
 
@@ -77,6 +85,15 @@ namespace ChatMail.Code.Models
         {
             get { return messageID; }
             set { messageID = value; }
+        }
+
+        /// <summary>
+        /// Holt oder setzt die ID des Empfängers
+        /// </summary>
+        public int Recipent_ID
+        {
+            get { return recipent_ID; }
+            set { recipent_ID = value; }
         }
         #endregion
 

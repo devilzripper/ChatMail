@@ -55,7 +55,7 @@ namespace ChatMail.Code.Models
             this.sendTime = sendTime;
             this.isSend = isSend;
         }
-
+        #endregion
         #region Properties
         /// <summary>
         /// Holt oder setzt die ID der Message
