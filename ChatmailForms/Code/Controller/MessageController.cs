@@ -99,10 +99,10 @@ namespace ChatMail.Code.Controller
         /// Versendet eine Nachricht und trägt sie somit in die Datenbank ein
         /// </summary>
         /// <param name="msg">Die Nachricht die übertragen werden sollen</param>
-        public void Send(Messages msg, int sender_id, int recipent_Id)
+        public void Send(Messages msg, int recipent_Id)
         {
-            this.db.Insert(new UserToMessage(this.currentUser.ID, sender_id, recipent_Id));
-            this.db.Insert(msg);
+            int messageid = this.db.Insert(msg);
+            this.db.Insert(new UserToMessage(this.currentUser.ID, recipent_Id, messageid));
         }
 
         /// <summary>

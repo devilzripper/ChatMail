@@ -42,6 +42,8 @@
             this.textBox_Name.Name = "textBox_Name";
             this.textBox_Name.Size = new System.Drawing.Size(163, 20);
             this.textBox_Name.TabIndex = 0;
+            this.textBox_Name.Text = "admin";
+            this.textBox_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_Password_KeyUp);
             // 
             // textBox_Password
             // 
@@ -49,6 +51,7 @@
             this.textBox_Password.Name = "textBox_Password";
             this.textBox_Password.Size = new System.Drawing.Size(163, 20);
             this.textBox_Password.TabIndex = 1;
+            this.textBox_Password.Text = "1234";
             this.textBox_Password.UseSystemPasswordChar = true;
             this.textBox_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_Password_KeyUp);
             // 
@@ -72,6 +75,7 @@
             // 
             // button_Senden
             // 
+            this.button_Senden.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button_Senden.Location = new System.Drawing.Point(245, 38);
             this.button_Senden.Name = "button_Senden";
             this.button_Senden.Size = new System.Drawing.Size(75, 23);

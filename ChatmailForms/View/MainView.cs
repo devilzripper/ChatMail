@@ -18,6 +18,7 @@ namespace ChatmailForms.View
         MessageController msg;
         List<User> currentUserList = new List<User>();
         List<Messages> msgToRecipentList = new List<Messages>();
+        int i = 0;
         public MainView()
         {
             InitializeComponent();
@@ -35,59 +36,50 @@ namespace ChatmailForms.View
             {
                 this.toolStripStatusLabel_Logged.Text = "Logged In";
                 this.timer_GetMessagesAndUser.Enabled = true;
-                currentUserList = usc.getUserList();
+                this.currentUserList = this.usc.getUserList();
                 this.bindingSource1.DataSource = currentUserList;
-                this.listBox1_Users.DataSource = bindingSource1;
+                this.listBox_Users.DataSource = bindingSource1;
                 this.comboBox_Users.DataSource = bindingSource1;
-                this.bindingSource_Message.DataSource = this.msgToRecipentList;
-                this.listBox_Messages.DataSource = bindingSource_Message;
                 this.msg = new MessageController(Login.CurrentUser);
-            }
-        }
-
-        public void fillListBoxUser()
-        {
-            listBox1_Users.Items.Clear();
-            foreach (User us in currentUserList)
-            {
-                if (us.State == State.Online)
-                {
-                    listBox1_Users.Items.Add(us);
-                }
             }
         }
 
         public void FillMessagesListBox()
         {
             var msgfromuser = msg.getMessageGotForUserList();
-            foreach (Messages msgToRecipent in msgfromuser.Where(m => m.IsShown == false))
+            if (i < 1)
             {
-                msgToRecipentList.Add(new Messages(builtChatOverViewString(msgToRecipent, 1), DateTime.Now, false));
-                msgToRecipent.IsShown = true;
-
+                foreach (Messages msgToRecipent in msgfromuser.Where(m => m.IsShown == false))
+                {
+                    //msgToRecipentList.Add(new Messages(builtChatOverViewString(msgToRecipent, 1), DateTime.Now, false));
+                    //msgToRecipent.IsShown = true;
+                    this.richTextBox1.Text += (builtChatOverViewString(msgToRecipent, 1));
+                }
+                var msgfromuserlist = msg.getMessageFromUserList();
+                foreach (var item in msgfromuserlist.Where(m => m.IsShown == false))
+                {
+                    msgToRecipentList.Add(new Messages(builtChatOverViewString(item, 0), DateTime.Now, false));
+                    item.IsShown = true;
+                }
             }
-            var msgfromuserlist = msg.getMessageFromUserList();
-            foreach (var item in msgfromuserlist.Where(m => m.IsShown == false))
-            {
-                //msgToRecipentList.Add(new Messages(builtChatOverViewString(item, 0)), DateTime.Now, false));
-                item.IsShown = true;
-            }
-            
+            i++;
         }
 
         private void timer_GetMessagesAndUser_Tick(object sender, EventArgs e)
         {
-            this.currentUserList = usc.getUserList();
+            this.currentUserList = this.usc.getUserList();
             FillMessagesListBox();
+            i = 0;
+            richTextBox1.Clear();
         }
 
         private void listBox1_Users_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                if (listBox1_Users.SelectedItem != null)
+                if (listBox_Users.SelectedItem != null)
                 {
-                    this.listBox1_Users.ContextMenuStrip = contextMenuStrip1;
+                    this.listBox_Users.ContextMenuStrip = contextMenuStrip1;
                     this.contextMenuStrip1.Show(Cursor.Position);
 
                 }
@@ -106,8 +98,8 @@ namespace ChatmailForms.View
                 {
                     var RecipentUser = (User)comboBox_Users.SelectedItem;
                     var msgToSend = new Messages(this.textBox_ChatText.Text, DateTime.Now, false);
-                    msg.Send(msgToSend, Login.CurrentUser.ID, RecipentUser.ID);
-                    listBox_Messages.Items.Add(this.builtChatOverViewString(msgToSend, 0));
+                    msg.Send(msgToSend, RecipentUser.ID);
+                    //listBox_Messages.Items.Add(this.builtChatOverViewString(msgToSend, 0));
                 }
             }
         }
@@ -124,10 +116,15 @@ namespace ChatmailForms.View
                     strB.Append("Neue Nachricht von ");
                     strB.Append(msg.getUserNameByMessage(Message.ID));
                     strB.Append(" Erhalten: ");
-                    strB.Append(Message.Text);
+                    strB.Append(Message.Text + Environment.NewLine);
                     return strB.ToString();
             }
             return string.Empty;
+        }
+
+        private void aktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

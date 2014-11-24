@@ -46,6 +46,7 @@ namespace ChatMail.Services
         #endregion
 
         #region public Methods
+
         /// <summary>
         /// Fügt einen Nutzer in die Datenbank ein
         /// </summary>
@@ -77,18 +78,19 @@ namespace ChatMail.Services
         /// Fügt eine Nachricht in die Datenbank ein 
         /// </summary>
         /// <param name="msg">Die Nachricht die eingetragen werden soll.</param>
-        public void Insert(Messages msg)
+        public int Insert(Messages msg)
         {
+            int id = 0;
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO Message(MessageText, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend)";
+                string sqlstring = "INSERT INTO Message(MessageText, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend) " + "SELECT SCOPE_IDENTITY()";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@Text", msg.Text);
                 cmd.Parameters.AddWithValue("@SendTIme", msg.SendTime);
                 cmd.Parameters.AddWithValue("@isSend", msg.IsShown);
-                cmd.ExecuteNonQuery();
+                id = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (Exception)
             {
@@ -98,6 +100,7 @@ namespace ChatMail.Services
             {
                 Close();
             }
+            return id;
         }
 
         /// <summary>

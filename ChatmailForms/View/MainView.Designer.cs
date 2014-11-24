@@ -36,8 +36,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Logged = new System.Windows.Forms.ToolStripStatusLabel();
-            this.listBox1_Users = new System.Windows.Forms.ListBox();
-            this.listBox_Messages = new System.Windows.Forms.ListBox();
+            this.listBox_Users = new System.Windows.Forms.ListBox();
+            this.bindingSource_Message = new System.Windows.Forms.BindingSource(this.components);
             this.textBox_ChatText = new System.Windows.Forms.TextBox();
             this.button_Send = new System.Windows.Forms.Button();
             this.timer_GetMessagesAndUser = new System.Windows.Forms.Timer(this.components);
@@ -45,18 +45,20 @@
             this.messageSchreibenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox_Users = new System.Windows.Forms.ComboBox();
-            this.bindingSource_Message = new System.Windows.Forms.BindingSource(this.components);
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.aktualisierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.accountToolStripMenuItem});
+            this.accountToolStripMenuItem,
+            this.aktualisierenToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(761, 24);
@@ -110,24 +112,15 @@
             this.toolStripStatusLabel_Logged.Size = new System.Drawing.Size(70, 17);
             this.toolStripStatusLabel_Logged.Text = "Logged Out";
             // 
-            // listBox1_Users
+            // listBox_Users
             // 
-            this.listBox1_Users.DisplayMember = "Name";
-            this.listBox1_Users.FormattingEnabled = true;
-            this.listBox1_Users.Location = new System.Drawing.Point(12, 41);
-            this.listBox1_Users.Name = "listBox1_Users";
-            this.listBox1_Users.Size = new System.Drawing.Size(184, 342);
-            this.listBox1_Users.TabIndex = 2;
-            this.listBox1_Users.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_Users_MouseUp);
-            // 
-            // listBox_Messages
-            // 
-            this.listBox_Messages.DataSource = this.bindingSource_Message;
-            this.listBox_Messages.FormattingEnabled = true;
-            this.listBox_Messages.Location = new System.Drawing.Point(202, 41);
-            this.listBox_Messages.Name = "listBox_Messages";
-            this.listBox_Messages.Size = new System.Drawing.Size(543, 277);
-            this.listBox_Messages.TabIndex = 3;
+            this.listBox_Users.DisplayMember = "Name";
+            this.listBox_Users.FormattingEnabled = true;
+            this.listBox_Users.Location = new System.Drawing.Point(12, 41);
+            this.listBox_Users.Name = "listBox_Users";
+            this.listBox_Users.Size = new System.Drawing.Size(184, 342);
+            this.listBox_Users.TabIndex = 2;
+            this.listBox_Users.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_Users_MouseUp);
             // 
             // textBox_ChatText
             // 
@@ -174,16 +167,31 @@
             this.comboBox_Users.Size = new System.Drawing.Size(121, 21);
             this.comboBox_Users.TabIndex = 8;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(202, 41);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(543, 278);
+            this.richTextBox1.TabIndex = 9;
+            this.richTextBox1.Text = "";
+            // 
+            // aktualisierenToolStripMenuItem
+            // 
+            this.aktualisierenToolStripMenuItem.Name = "aktualisierenToolStripMenuItem";
+            this.aktualisierenToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.aktualisierenToolStripMenuItem.Text = "Aktualisieren";
+            this.aktualisierenToolStripMenuItem.Click += new System.EventHandler(this.aktualisierenToolStripMenuItem_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 428);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.comboBox_Users);
             this.Controls.Add(this.button_Send);
             this.Controls.Add(this.textBox_ChatText);
-            this.Controls.Add(this.listBox_Messages);
-            this.Controls.Add(this.listBox1_Users);
+            this.Controls.Add(this.listBox_Users);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -194,9 +202,9 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,8 +214,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ListBox listBox1_Users;
-        private System.Windows.Forms.ListBox listBox_Messages;
+        private System.Windows.Forms.ListBox listBox_Users;
         private System.Windows.Forms.TextBox textBox_ChatText;
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem;
@@ -221,6 +228,8 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ComboBox comboBox_Users;
         private System.Windows.Forms.BindingSource bindingSource_Message;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem aktualisierenToolStripMenuItem;
     }
 }
 
