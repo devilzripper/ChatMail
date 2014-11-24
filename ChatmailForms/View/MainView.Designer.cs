@@ -77,14 +77,14 @@
             this.loginToolStripMenuItem.Name = "loginToolStripMenuItem";
             this.loginToolStripMenuItem.ShortcutKeyDisplayString = "F1";
             this.loginToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.loginToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loginToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loginToolStripMenuItem.Text = "Login";
             this.loginToolStripMenuItem.Click += new System.EventHandler(this.loginToolStripMenuItem_Click);
             // 
             // registerToolStripMenuItem
             // 
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
-            this.registerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.registerToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.registerToolStripMenuItem.Text = "Register";
             // 
             // statusStrip1
@@ -122,6 +122,7 @@
             // 
             // listBox_Messages
             // 
+            this.listBox_Messages.DataSource = this.bindingSource_Message;
             this.listBox_Messages.FormattingEnabled = true;
             this.listBox_Messages.Location = new System.Drawing.Point(202, 41);
             this.listBox_Messages.Name = "listBox_Messages";

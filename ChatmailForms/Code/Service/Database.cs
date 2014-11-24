@@ -77,7 +77,7 @@ namespace ChatMail.Services
         /// Fügt eine Nachricht in die Datenbank ein 
         /// </summary>
         /// <param name="msg">Die Nachricht die eingetragen werden soll.</param>
-        public void Insert(ChatMail.Code.Models.Messages msg)
+        public void Insert(Messages msg)
         {
             try
             {
@@ -109,11 +109,12 @@ namespace ChatMail.Services
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO UserToMessage(UserID_FK, MessageID_FK) VALUES(@UserID_FK, @MessageID_FK)";
+                string sqlstring = "INSERT INTO UserToMessage(UserID_FK, MessageID_FK, Recipent_ID_FK) VALUES(@UserID_FK, @MessageID_FK, @Recipent_ID_FK)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@UserID_FK", user2msg.UserID);
                 cmd.Parameters.AddWithValue("@MessageID_FK", user2msg.MessageID);
+                cmd.Parameters.AddWithValue("@Recipent_ID_FK", user2msg.Recipent_ID);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -231,7 +232,7 @@ namespace ChatMail.Services
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "SELECT Name FROM User WHERE ID=(SELECT UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
+                string sqlstring = "SELECT Name FROM [User] WHERE ID=(SELECT Top 1 UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 cmd.Parameters.Add(new SqlParameter("@ID", messageid));
                 sqlConnection.Open();
@@ -243,9 +244,9 @@ namespace ChatMail.Services
                     }
                  }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Fehler beim laden der Userdaten", "Fehlermeldung");
+                MessageBox.Show("Fehler beim laden der Userdaten: " + ex.Message, "Fehlermeldung");
             }
             finally
             {
@@ -255,6 +256,11 @@ namespace ChatMail.Services
             return string.Empty;
         }
 
+        /// <summary>
+        /// Holt einen User ID für einer ID von einer Nachricht
+        /// </summary>
+        /// <param name="messageid">Die Nachrichten ID von der der User </param>
+        /// <returns>Holt die</returns>
         public int getUserIDByMessage(int messageid)
         {
             try
@@ -308,10 +314,10 @@ namespace ChatMail.Services
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show("Fehler beim laden der UserToMessage Daten: " + ex.Message, "Fehlermeldung");
                 throw;
-                MessageBox.Show("Fehler beim laden der UserToMessage Daten", "Fehlermeldung");
             }
             finally
             {
