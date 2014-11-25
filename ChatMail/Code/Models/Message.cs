@@ -31,31 +31,62 @@ namespace ChatMail.Code.Models
         /// <summary>
         /// Ist die Nachricht versandt?
         /// </summary>
-        private bool isSend;
+        private bool isShown;
         #endregion
 
         #region Constructor
         /// <summary>
-        /// Initialisiert eine neue Instanz der <see cref="Message.cs"/> Klasse.
+        /// Initialisiert eine neue Instanz der <see cref="Messages.cs"/> Klasse.
         /// </summary>
         /// <param name="id">Die ID der Message</param>
         /// <param name="text">Der Text der Message</param>
         /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
         /// <param name="isSend">Ist die Nachricht versendet?</param>
-        public Message(int id, string text, DateTime sendTime, bool isSend)
+        public Message(int id, string text, DateTime sendTime, bool isShown)
         {
             this.id = id;
             this.text = text;
             this.sendTime = sendTime;
-            this.isSend = isSend;
+            this.isShown = isShown;
         }
-        public Message(string text, DateTime sendTime, bool isSend)
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="Messages.cs"/> Klasse.
+        /// </summary>
+        /// <param name="id">Die ID der Message</param>
+        /// <param name="text">Der Text der Message</param>
+        /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
+        /// <param name="isSend">Ist die Nachricht versendet?</param>
+        public Message(int id, string text, DateTime sendTime)
+        {
+            this.id = id;
+            this.text = text;
+            this.sendTime = sendTime;
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der <see cref="Messages.cs"/> Klasse.
+        /// </summary>
+        /// <param name="id">Die ID der Message</param>
+        /// <param name="text">Der Text der Message</param>
+        /// <param name="sendTime">Der Zeitpunkt als die Nachricht versandt wurde</param>
+        /// <param name="isSend">Ist die Nachricht versendet?</param>
+        public Message(string text, DateTime sendTime, bool isShown)
         {
             this.text = text;
             this.sendTime = sendTime;
-            this.isSend = isSend;
+            this.isShown = isShown;
+        }
+
+        /// <summary>
+        /// Parameterloser Kontruktor für Sample Data aus Blend
+        /// </summary>
+        public Message()
+        {
+
         }
         #endregion
+
         #region Properties
         /// <summary>
         /// Holt oder setzt die ID der Message
@@ -87,10 +118,10 @@ namespace ChatMail.Code.Models
         /// <summary>
         /// Holt oder setzt den Wert ob es gesendet wurden ist.
         /// </summary>
-        public bool IsSend
+        public bool IsShown
         {
-            get { return isSend; }
-            set { isSend = value; }
+            get { return isShown; }
+            set { isShown = value; }
         }
         #endregion
     }

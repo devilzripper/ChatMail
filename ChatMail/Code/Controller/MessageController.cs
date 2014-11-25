@@ -69,7 +69,7 @@ namespace ChatMail.Code.Controller
         {
             if (this.currentUser != null)
             {
-                this.messageFromUserList = this.getMessageByUser();
+                this.messageFromUserList = this.getMessageGotForUserList();
             }
         }
 
@@ -99,10 +99,19 @@ namespace ChatMail.Code.Controller
         /// Versendet eine Nachricht und trägt sie somit in die Datenbank ein
         /// </summary>
         /// <param name="msg">Die Nachricht die übertragen werden sollen</param>
-        public void Send(Message msg, int recipent_id)
+        public void Send(Message msg, int recipent_Id)
         {
-            this.db.Insert(new UserToMessage(this.currentUser.ID, recipent_id));
-            this.db.Insert(msg);
+            int messageid = this.db.Insert(msg);
+            this.db.Insert(new UserToMessage(this.currentUser.ID, recipent_Id, messageid));
+        }
+
+        /// <summary>
+        /// Holt eine Liste von Nachrichten.
+        /// </summary>
+        /// <returns>Die gefüllte Liste an Nachrichten</returns>
+        public List<Message> getMessageGotForUserList()
+        {
+            return this.getMessageGotForUser();
         }
 
         /// <summary>
@@ -111,7 +120,7 @@ namespace ChatMail.Code.Controller
         /// <returns>Die gefüllte Liste an Nachrichten</returns>
         public List<Message> getMessageFromUserList()
         {
-            return getMessageByUser();
+            return this.getMessageSentByUser();
         }
 
         /// <summary>
@@ -121,7 +130,7 @@ namespace ChatMail.Code.Controller
         /// <returns>Den Username der versendeten Nachricht</returns>
         public string getUserNameByMessage(int id)
         {
-            return db.getUserNameByMessage(id);
+            return this.db.getUserNameByMessage(id);
         }
 
         /// <summary>
@@ -141,13 +150,41 @@ namespace ChatMail.Code.Controller
         /// Holt eine Liste von Nachrichten die nur von dem Nutzer sind
         /// </summary>
         /// <returns>Die gefüllte Liste an Nachrichten</returns>
-        private List<Message> getMessageByUser()
+        private List<Message> getMessageSentByUser()
         {
             messageIDList = new List<int>();
             messageliste = new List<Message>();
             foreach (UserToMessage item in db.getUserToMessageList())
             {
                 if (item.UserID == currentUser.ID)
+                {
+                    messageIDList.Add(item.MessageID);
+                }
+            }
+            foreach (int id in messageIDList)
+            {
+                foreach (Message msg in db.getMessageList())
+                {
+                    if (msg.ID == id)
+                    {
+                        messageliste.Add(msg);
+                    }
+                }
+            }
+            return messageliste;
+        }
+
+        /// <summary>
+        /// Holt eine Liste von Nachrichten die nur von dem Nutzer sind
+        /// </summary>
+        /// <returns>Die gefüllte Liste an Nachrichten</returns>
+        private List<Message> getMessageGotForUser()
+        {
+            messageIDList = new List<int>();
+            messageliste = new List<Message>();
+            foreach (UserToMessage item in db.getUserToMessageList())
+            {
+                if (item.Recipent_ID == currentUser.ID)
                 {
                     messageIDList.Add(item.MessageID);
                 }

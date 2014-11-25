@@ -1,7 +1,7 @@
 ﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:ViewModel="clr-namespace:ChatMail.Code.ViewModel" 
+             xmlns:ViewModel="clr-namespace:ChatMail.Code.UIController" 
              xmlns:Services="clr-namespace:ChatMail.Code.ViewModelService"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,7 +17,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ViewModel:MailOverviewViewModel x:Key="MailOverviewViewModelDataSource" d:IsDataSource="True"/>
-            <ViewModel:UserViewModel x:Key="UserViewModelDataSource" d:IsDataSource="True"/>
             <Services:ContentControlService x:Key="ContentControlService" d:IsDataSource="True"></Services:ContentControlService>
         </ResourceDictionary>
     </Application.Resources>

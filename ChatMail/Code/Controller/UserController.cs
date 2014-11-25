@@ -19,7 +19,7 @@ namespace ChatMail.Code.Controller
     /// </summary>
     public class UserController
     {
-        public static User CurrentUser { get; set; }
+        private static User currentUser;
 
         /// <summary>
         /// Ein Instanz der Datenbank
@@ -46,7 +46,7 @@ namespace ChatMail.Code.Controller
                 {
                     if(user.Password == password)
                     {
-                        CurrentUser = user;
+                        currentUser = user;
                         return true;
                     }
                     else
@@ -64,7 +64,8 @@ namespace ChatMail.Code.Controller
         /// <param name="userid"></param>
         public void Logout(int userid)
         {
-           this.db.Alter(this.db.getUserbyID(userid));   
+           this.db.Alter(this.db.getUserbyID(userid));
+           currentUser = null;
         }
 
         /// <summary>
@@ -77,5 +78,15 @@ namespace ChatMail.Code.Controller
             this.db.Insert(new User(username, password));
         }
 
+        public List<User> getUserList()
+        {
+            return this.db.getUserList();
+        }
+
+        public static User CurrentUser
+        {
+            get { return UserController.currentUser; }
+            set { UserController.currentUser = value; }
+        }
     }
 }

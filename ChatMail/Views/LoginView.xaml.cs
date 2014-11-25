@@ -30,11 +30,14 @@ namespace ChatMail.Views
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (usc.Login("admin", "1234"))
+            if (usc.Login(tbUsername.Text, passwordbox.Password))
             {
-                labelMessage.Text = "success";
                 var context = (ContentControlService)FindResource("ContentControlService");
                 context.ShowedWindow = 1;
+            }
+            else
+            {
+                MessageBox.Show("Username oder Passwort falsch.");
             }
         }
     }

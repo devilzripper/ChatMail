@@ -5,12 +5,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace ChatMail.Services
 {
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Windows;
-using ChatMail.Code.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Windows;
+    using ChatMail.Code.Models;
 
     /// <summary>
     /// Die Klasse der Datenbankzugriffe
@@ -31,7 +31,7 @@ using ChatMail.Code.Models;
         /// <summary>
         /// Der ConnectionString zum verbinden in die Datenbank
         /// </summary>
-        private string connString = @"Data Source=(localdb)\ProjectsV12;Initial Catalog=MailChat;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+        private string connString = "Data Source=localhost;Initial Catalog=ChatMail;Integrated Security=True;";
         #endregion
 
         #region Constructor
@@ -45,6 +45,7 @@ using ChatMail.Code.Models;
         #endregion
 
         #region public Methods
+
         /// <summary>
         /// Fügt einen Nutzer in die Datenbank ein
         /// </summary>
@@ -76,18 +77,19 @@ using ChatMail.Code.Models;
         /// Fügt eine Nachricht in die Datenbank ein 
         /// </summary>
         /// <param name="msg">Die Nachricht die eingetragen werden soll.</param>
-        public void Insert(Message msg)
+        public int Insert(Message msg)
         {
+            int id = 0;
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO Message(Name, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend)";
+                string sqlstring = "INSERT INTO Message(MessageText, SendTime, IsSend) VALUES(@Text, @SendTIme, @isSend) " + "SELECT SCOPE_IDENTITY()";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@Text", msg.Text);
                 cmd.Parameters.AddWithValue("@SendTIme", msg.SendTime);
-                cmd.Parameters.AddWithValue("@isSend", msg.IsSend);
-                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@isSend", msg.IsShown);
+                id = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (Exception)
             {
@@ -97,6 +99,7 @@ using ChatMail.Code.Models;
             {
                 Close();
             }
+            return id;
         }
 
         /// <summary>
@@ -108,11 +111,12 @@ using ChatMail.Code.Models;
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "INSERT INTO Message(UserID_FK, MessageID_FK) VALUES(@UserID_FK, @MessageID_FK)";
+                string sqlstring = "INSERT INTO UserToMessage(UserID_FK, MessageID_FK, Recipent_ID_FK) VALUES(@UserID_FK, @MessageID_FK, @Recipent_ID_FK)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 sqlConnection.Open();
                 cmd.Parameters.AddWithValue("@UserID_FK", user2msg.UserID);
                 cmd.Parameters.AddWithValue("@MessageID_FK", user2msg.MessageID);
+                cmd.Parameters.AddWithValue("@Recipent_ID_FK", user2msg.Recipent_ID);
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -162,9 +166,10 @@ using ChatMail.Code.Models;
             List<User> userListe = new List<User>();
             try
             {
-                sqlConnection.ConnectionString = connString;
                 string sqlstring = "SELECT * FROM [User]";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
+                sqlConnection.Close();
+                sqlConnection.ConnectionString = connString;
                 sqlConnection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -229,7 +234,7 @@ using ChatMail.Code.Models;
             try
             {
                 sqlConnection.ConnectionString = connString;
-                string sqlstring = "SELECT Name FROM User WHERE ID=(SELECT UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
+                string sqlstring = "SELECT Name FROM [User] WHERE ID=(SELECT Top 1 UserID_FK FROM UserToMessage WHERE MessageID_FK=@ID)";
                 cmd = new SqlCommand(sqlstring, sqlConnection);
                 cmd.Parameters.Add(new SqlParameter("@ID", messageid));
                 sqlConnection.Open();
@@ -241,9 +246,9 @@ using ChatMail.Code.Models;
                     }
                  }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Fehler beim laden der Userdaten", "Fehlermeldung");
+                MessageBox.Show("Fehler beim laden der Userdaten: " + ex.Message, "Fehlermeldung");
             }
             finally
             {
@@ -253,6 +258,11 @@ using ChatMail.Code.Models;
             return string.Empty;
         }
 
+        /// <summary>
+        /// Holt einen User ID für einer ID von einer Nachricht
+        /// </summary>
+        /// <param name="messageid">Die Nachrichten ID von der der User </param>
+        /// <returns>Holt die</returns>
         public int getUserIDByMessage(int messageid)
         {
             try
@@ -292,9 +302,10 @@ using ChatMail.Code.Models;
             List<UserToMessage> userToMessageListe = new List<UserToMessage>();
             try
             {
-                sqlConnection.ConnectionString = connString;
-                string sqlstring = "SELECT * FROM UserToMessage";
-                cmd = new SqlCommand(sqlstring, sqlConnection);
+               string sqlstring = "SELECT * FROM UserToMessage";
+               cmd = new SqlCommand(sqlstring, sqlConnection);
+               sqlConnection.Close();
+               sqlConnection.ConnectionString = connString;
                 sqlConnection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -305,9 +316,10 @@ using ChatMail.Code.Models;
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Fehler beim laden der UserToMessage Daten", "Fehlermeldung");
+                MessageBox.Show("Fehler beim laden der UserToMessage Daten: " + ex.Message, "Fehlermeldung");
+                throw;
             }
             finally
             {
@@ -334,7 +346,7 @@ using ChatMail.Code.Models;
                 {
                     while (reader.Read())
                     {
-                        messageListe.Add(new Message(Convert.ToInt32(reader[0]), reader[1].ToString(), Convert.ToDateTime(reader[2]), Convert.ToBoolean(reader[0])));
+                        messageListe.Add(new Message(Convert.ToInt32(reader[0]), reader[1].ToString(), Convert.ToDateTime(reader[2])));
                     }
 
                 }

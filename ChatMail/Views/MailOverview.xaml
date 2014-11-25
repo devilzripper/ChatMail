@@ -10,17 +10,18 @@
     <UserControl.Resources>
         <DataTemplate x:Key="MessageTemplate">
             <StackPanel>
+                <TextBlock Text="{Binding }"></TextBlock>
                 <TextBlock Text="{Binding SendTime}" FontWeight="Bold" />
                 <TextBlock Text="{Binding Text}" FontWeight="Bold" />
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid DataContext="{Binding Source={StaticResource MailOverviewViewModelDataSource}}" d:DataContext="{d:DesignData /SampleData/MailOverviewViewModelSampleData.xaml}">
+    <Grid DataContext="{Binding Source={StaticResource MailOverviewViewModelDataSource}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="74*"/>
             <ColumnDefinition Width="243*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemTemplate="{DynamicResource MessageTemplate}" ItemsSource="{Binding Messages}" />
+        <ListBox ItemTemplate="{DynamicResource MessageTemplate}" ItemsSource="{Binding Messages}" BorderBrush="Black" BorderThickness="0.5"/>
         <local:MailDetailed Grid.Column="1"/>
     </Grid>
 </UserControl>

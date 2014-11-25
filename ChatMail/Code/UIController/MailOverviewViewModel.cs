@@ -10,11 +10,21 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ChatMail.Code.ViewModel
+namespace ChatMail.Code.UIController
 {
     public class MailOverviewViewModel : BaseModelService
     {
         #region Binding Fields
+
+
+        private ObservableCollection<Message> messageList;
+
+        public ObservableCollection<Message> MessageList
+        {
+            get { return messageList; }
+            set { messageList = value; }
+        }
+        
 
         private string responseMessageText;
 
@@ -34,7 +44,7 @@ namespace ChatMail.Code.ViewModel
             set
             {
                 messageListSelectedIndex = value;
-                SelectedMessage = Messages[value];
+                SelectedMessage = messageList[messageListSelectedIndex];
                 RaisePropertyChanged("MessageListSelectedIndex");
             }
         }
@@ -53,25 +63,18 @@ namespace ChatMail.Code.ViewModel
 
         #endregion
 
-        private ObservableCollection<Message> messages;
-        public ObservableCollection<Message> Messages
-        {
-            get {
-                return messages;
-            }
-            set { messages = value;}
-        }
-
         MessageController msc;
 
         public MailOverviewViewModel()
         {
+            if (UserController.CurrentUser != null)
+            {
+                msc = new MessageController(UserController.CurrentUser);
+            }
         }
 
         public void SendResponse()
         {
-            msc = new MessageController(UserController.CurrentUser);
-            //msc.Send(new Message();
         }
     }
 }
