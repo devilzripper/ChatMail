@@ -67,10 +67,11 @@ namespace ChatmailForms.View
 
         private void timer_GetMessagesAndUser_Tick(object sender, EventArgs e)
         {
-            this.currentUserList = this.usc.getUserList();
-            FillMessagesListBox();
             i = 0;
             richTextBox1.Clear();
+            this.currentUserList = this.usc.getUserList();
+            FillMessagesListBox();
+
         }
 
         private void listBox1_Users_MouseUp(object sender, MouseEventArgs e)
@@ -125,6 +126,14 @@ namespace ChatmailForms.View
         private void aktualisierenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void textBox_ChatText_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.Enter && comboBox_Users.SelectedItem != null)
+            {
+                button_Send.PerformClick();
+            }
         }
     }
 }

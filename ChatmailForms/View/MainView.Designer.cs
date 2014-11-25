@@ -129,6 +129,7 @@
             this.textBox_ChatText.Name = "textBox_ChatText";
             this.textBox_ChatText.Size = new System.Drawing.Size(416, 58);
             this.textBox_ChatText.TabIndex = 4;
+            this.textBox_ChatText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_ChatText_KeyUp);
             // 
             // button_Send
             // 
