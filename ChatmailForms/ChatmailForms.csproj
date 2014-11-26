@@ -50,6 +50,7 @@
     <Compile Include="Code\Models\User.cs" />
     <Compile Include="Code\Models\UserToMessage.cs" />
     <Compile Include="Code\Service\Database.cs" />
+    <Compile Include="Code\ViewModel\MessageViewModel.cs" />
     <Compile Include="View\Login.cs">
       <SubType>Form</SubType>
     </Compile>

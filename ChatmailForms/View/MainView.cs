@@ -18,7 +18,6 @@ namespace ChatmailForms.View
         MessageController msg;
         List<User> currentUserList = new List<User>();
         List<Messages> msgToRecipentList = new List<Messages>();
-        int i = 0;
         public MainView()
         {
             InitializeComponent();
@@ -34,44 +33,46 @@ namespace ChatmailForms.View
             Login log = new Login();
             if (log.ShowDialog() == DialogResult.OK)
             {
+                this.msg = new MessageController(Login.CurrentUser);
                 this.toolStripStatusLabel_Logged.Text = "Logged In";
                 this.timer_GetMessagesAndUser.Enabled = true;
                 this.currentUserList = this.usc.getUserList();
                 this.bindingSource1.DataSource = currentUserList;
+                this.msgToRecipentList = this.msg.getMessageGotForUserList(Login.CurrentUser.ID);
+                this.bindingSource_Message.DataSource = msgToRecipentList;
                 this.listBox_Users.DataSource = bindingSource1;
                 this.comboBox_Users.DataSource = bindingSource1;
-                this.msg = new MessageController(Login.CurrentUser);
+                this.dgvMessages.DataSource = bindingSource_Message;
             }
         }
 
-        public void FillMessagesListBox()
-        {
-            var msgfromuser = msg.getMessageGotForUserList();
-            if (i < 1)
-            {
-                foreach (Messages msgToRecipent in msgfromuser.Where(m => m.IsShown == false))
-                {
-                    //msgToRecipentList.Add(new Messages(builtChatOverViewString(msgToRecipent, 1), DateTime.Now, false));
-                    //msgToRecipent.IsShown = true;
-                    this.richTextBox1.Text += (builtChatOverViewString(msgToRecipent, 1));
-                }
-                var msgfromuserlist = msg.getMessageFromUserList();
-                foreach (var item in msgfromuserlist.Where(m => m.IsShown == false))
-                {
-                    msgToRecipentList.Add(new Messages(builtChatOverViewString(item, 0), DateTime.Now, false));
-                    item.IsShown = true;
-                }
-            }
-            i++;
-        }
+        //public void FillMessagesListBox()
+        //{
+        //    var msgfromuser = msg.getMessageGotForUserList();
+        //    if (i < 1)
+        //    {
+        //        foreach (Messages msgToRecipent in msgfromuser.Where(m => m.IsShown == false))
+        //        {
+        //            //msgToRecipentList.Add(new Messages(builtChatOverViewString(msgToRecipent, 1), DateTime.Now, false));
+        //            //msgToRecipent.IsShown = true;
+        //            this.richTextBox1.Text += (builtChatOverViewString(msgToRecipent, 1));
+        //        }
+        //        var msgfromuserlist = msg.getMessageFromUserList();
+        //        foreach (var item in msgfromuserlist.Where(m => m.IsShown == false))
+        //        {
+        //            msgToRecipentList.Add(new Messages(builtChatOverViewString(item, 0), DateTime.Now, false));
+        //            item.IsShown = true;
+        //        }
+        //    }
+        //    i++;
+        //}
 
         private void timer_GetMessagesAndUser_Tick(object sender, EventArgs e)
         {
-            i = 0;
-            richTextBox1.Clear();
             this.currentUserList = this.usc.getUserList();
-            FillMessagesListBox();
-
+            this.msgToRecipentList = this.msg.getMessageGotForUserList(Login.CurrentUser.ID);
+            dgvMessages.DataSource = null;
+            dgvMessages.DataSource = msgToRecipentList;
         }
 
         private void listBox1_Users_MouseUp(object sender, MouseEventArgs e)
@@ -100,7 +101,7 @@ namespace ChatmailForms.View
                     var RecipentUser = (User)comboBox_Users.SelectedItem;
                     var msgToSend = new Messages(this.textBox_ChatText.Text, DateTime.Now, false);
                     msg.Send(msgToSend, RecipentUser.ID);
-                    //listBox_Messages.Items.Add(this.builtChatOverViewString(msgToSend, 0));
+                    this.textBox_ChatText.Text = string.Empty;
                 }
             }
         }

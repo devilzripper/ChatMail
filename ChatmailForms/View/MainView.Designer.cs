@@ -33,6 +33,7 @@
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aktualisierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_Logged = new System.Windows.Forms.ToolStripStatusLabel();
@@ -45,13 +46,13 @@
             this.messageSchreibenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox_Users = new System.Windows.Forms.ComboBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.aktualisierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvMessages = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMessages)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -88,6 +89,13 @@
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
             this.registerToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.registerToolStripMenuItem.Text = "Register";
+            // 
+            // aktualisierenToolStripMenuItem
+            // 
+            this.aktualisierenToolStripMenuItem.Name = "aktualisierenToolStripMenuItem";
+            this.aktualisierenToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.aktualisierenToolStripMenuItem.Text = "Aktualisieren";
+            this.aktualisierenToolStripMenuItem.Click += new System.EventHandler(this.aktualisierenToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -168,27 +176,20 @@
             this.comboBox_Users.Size = new System.Drawing.Size(121, 21);
             this.comboBox_Users.TabIndex = 8;
             // 
-            // richTextBox1
+            // dgvMessages
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(202, 41);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(543, 278);
-            this.richTextBox1.TabIndex = 9;
-            this.richTextBox1.Text = "";
-            // 
-            // aktualisierenToolStripMenuItem
-            // 
-            this.aktualisierenToolStripMenuItem.Name = "aktualisierenToolStripMenuItem";
-            this.aktualisierenToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.aktualisierenToolStripMenuItem.Text = "Aktualisieren";
-            this.aktualisierenToolStripMenuItem.Click += new System.EventHandler(this.aktualisierenToolStripMenuItem_Click);
+            this.dgvMessages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMessages.Location = new System.Drawing.Point(202, 41);
+            this.dgvMessages.Name = "dgvMessages";
+            this.dgvMessages.Size = new System.Drawing.Size(543, 278);
+            this.dgvMessages.TabIndex = 9;
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 428);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.dgvMessages);
             this.Controls.Add(this.comboBox_Users);
             this.Controls.Add(this.button_Send);
             this.Controls.Add(this.textBox_ChatText);
@@ -206,6 +207,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource_Message)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMessages)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,8 +231,8 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ComboBox comboBox_Users;
         private System.Windows.Forms.BindingSource bindingSource_Message;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripMenuItem aktualisierenToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dgvMessages;
     }
 }
 
